@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>04-JS函数的使用.html</title>
+  </head>
+  <body>
+    <script>
+      // 箭头函数
+      let fn = (a, b) => {
+        console.log("我是箭头函数" + (a + b));
+      };
+      // 调用函数
+      fn(1, 2);
+
+      // 匿名函数
+      let fn2 = function (a, b) {
+        console.log("我是匿名函数" + a * b);
+      };
+      // 调用函数
+      fn2(2, 2);
+
+      // 具名函数
+      function fn3(a, b) {
+        console.log("我是具名函数" + (a - b));
+      }
+      // 调用函数
+      fn3(1, 2);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>用户信息管理系统</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+        background-color: #f5f5f5;
+      }
+      h1 {
+        text-align: center;
+        color: #333;
+        margin-bottom: 30px;
+      }
+      .search-container {
+        background-color: white;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+      }
+      .search-item {
+        display: inline-block;
+        margin-right: 20px;
+        margin-bottom: 10px;
+      }
+      .search-item label {
+        display: inline-block;
+        width: 60px;
+        text-align: right;
+        margin-right: 10px;
+      }
+      .search-item input,
+      .search-item select {
+        padding: 5px 10px;
+        border: 1px solid #ddd;
+        border-radius: 3px;
+        width: 150px;
+      }
+      button {
+        padding: 6px 20px;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+        margin-right: 10px;
+      }
+      button:hover {
+        background-color: #45a049;
+      }
+      .clear-btn {
+        background-color: #999;
+      }
+      .clear-btn:hover {
+        background-color: #777;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        background-color: white;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      th,
+      td {
+        padding: 12px;
+        text-align: center;
+        border-bottom: 1px solid #ddd;
+      }
+      th {
+        background-color: #008cba;
+        color: white;
+      }
+      tr:hover {
+        background-color: #f5f5f5;
+      }
+      img {
+        width: 30px;
+        height: 30px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>用户信息管理系统</h1>
+    <div class="search-container">
+      <div class="search-item">
+        <label for="name">姓名:</label>
+        <input type="text" id="name" placeholder="请输入姓名" />
+      </div>
+      <div class="search-item">
+        <label for="phone">手机:</label>
+        <input type="text" id="phone" placeholder="请输入手机号" />
+      </div>
+      <div class="search-item">
+        <label for="role">角色:</label>
+        <select id="role">
+          <option value="">请选择</option>
+          <option value="管理员">管理员</option>
+          <option value="普通员工">普通员工</option>
+          <option value="实习员工">实习员工</option>
+        </select>
+      </div>
+      <div class="search-item">
+        <label for="status">状态:</label>
+        <select id="status">
+          <option value="">请选择</option>
+          <option value="正常">正常</option>
+          <option value="停用">停用</option>
+        </select>
+      </div>
+      <button id="search-btn">查询</button>
+      <button id="clear-btn" class="clear-btn">清空</button>
+    </div>
+    <table id="user-table">
+      <thead>
+        <tr>
+          <th>序号</th>
+          <th>姓名</th>
+          <th>用户名</th>
+          <th>头像</th>
+          <th>角色</th>
+          <th>手机号</th>
+          <th>状态</th>
+          <th>更新时间</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>令狐冲</td>
+          <td>linghuchong</td>
+          <td><img src="../images/1.png" alt="头像" /></td>
+          <td>普通员工</td>
+          <td>13305601101</td>
+          <td>正常</td>
+          <td>2025-05-10 12:05:30</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>左冷禅</td>
+          <td>zuolengchan</td>
+          <td><img src="../images/1.png" alt="头像" /></td>
+          <td>普通员工</td>
+          <td>13305601102</td>
+          <td>正常</td>
+          <td>2025-05-10 12:05:30</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>岳不群</td>
+          <td>yuebuqun</td>
+          <td><img src="../images/1.png" alt="头像" /></td>
+          <td>普通员工</td>
+          <td>13305601103</td>
+          <td>正常</td>
+          <td>2025-05-10 12:05:30</td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td>任盈盈</td>
+          <td>renyingying</td>
+          <td><img src="../images/1.png" alt="头像" /></td>
+          <td>普通员工</td>
+          <td>13305601104</td>
+          <td>正常</td>
+          <td>2025-05-10 12:05:30</td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td>陆柏</td>
+          <td>lubai</td>
+          <td><img src="../images/1.png" alt="头像" /></td>
+          <td>普通员工</td>
+          <td>13305601105</td>
+          <td>正常</td>
+          <td>2025-05-10 12:05:30</td>
+        </tr>
+        <tr>
+          <td>6</td>
+          <td>田伯光</td>
+          <td>tianboguang</td>
+          <td><img src="../images/1.png" alt="头像" /></td>
+          <td>普通员工</td>
+          <td>13305601106</td>
+          <td>正常</td>
+          <td>2025-05-10 12:05:30</td>
+        </tr>
+        <tr>
+          <td>7</td>
+          <td>任我行</td>
+          <td>renwoxing</td>
+          <td><img src="../images/1.png" alt="头像" /></td>
+          <td>管理员</td>
+          <td>13305601107</td>
+          <td>正常</td>
+          <td>2025-05-10 12:05:30</td>
+        </tr>
+        <tr>
+          <td>8</td>
+          <td>向问天</td>
+          <td>xiangwentian</td>
+          <td><img src="../images/1.png" alt="头像" /></td>
+          <td>普通员工</td>
+          <td>13305601108</td>
+          <td>正常</td>
+          <td>2025-05-10 12:05:30</td>
+        </tr>
+        <tr>
+          <td>9</td>
+          <td>定逸</td>
+          <td>dingyi</td>
+          <td><img src="../images/1.png" alt="头像" /></td>
+          <td>普通员工</td>
+          <td>13305601109</td>
+          <td>停用</td>
+          <td>2025-05-10 12:05:30</td>
+        </tr>
+        <tr>
+          <td>10</td>
+          <td>依琳</td>
+          <td>yilin</td>
+          <td><img src="../images/1.png" alt="头像" /></td>
+          <td>实习员工</td>
+          <td>13305601110</td>
+          <td>正常</td>
+          <td>2025-05-10 12:05:30</td>
+        </tr>
+      </tbody>
+    </table>
+    <script>
+      // 页面加载完成后，根据规则设置角色和状态的显示格式
+      window.addEventListener("DOMContentLoaded", function () {
+        const rows = document.querySelectorAll("#user-table tbody tr");
+        const roleMapping = {
+          管理员: "1 - 管理员",
+          普通员工: "2 - 普通员工",
+          实习员工: "3 - 实习员工",
+        };
+        const statusMapping = {
+          正常: "1 - 正常",
+          停用: "0 - 停用",
+        };
+
+        rows.forEach((row) => {
+          const roleCell = row.cells[4];
+          const statusCell = row.cells[6];
+
+          // 保存原始值用于搜索
+          roleCell.dataset.originalValue = roleCell.textContent;
+          statusCell.dataset.originalValue = statusCell.textContent;
+
+          // 设置显示格式
+          if (roleMapping[roleCell.textContent]) {
+            roleCell.textContent = roleMapping[roleCell.textContent];
+          }
+          if (statusMapping[statusCell.textContent]) {
+            statusCell.textContent = statusMapping[statusCell.textContent];
+          }
+        });
+      });
+
+      // 查询功能
+      document
+        .getElementById("search-btn")
+        .addEventListener("click", function () {
+          const name = document.getElementById("name").value.toLowerCase();
+          const phone = document.getElementById("phone").value;
+          const role = document.getElementById("role").value;
+          const status = document.getElementById("status").value;
+          const rows = document.querySelectorAll("#user-table tbody tr");
+
+          rows.forEach((row) => {
+            const nameCell = row.cells[1].textContent.toLowerCase();
+            const phoneCell = row.cells[5].textContent;
+            const roleCell = row.cells[4];
+            const statusCell = row.cells[6];
+
+            // 获取原始值用于搜索比较
+            const roleValue =
+              roleCell.dataset.originalValue || roleCell.textContent;
+            const statusValue =
+              statusCell.dataset.originalValue || statusCell.textContent;
+
+            const nameMatch = name === "" || nameCell.includes(name);
+            const phoneMatch = phone === "" || phoneCell.includes(phone);
+            const roleMatch = role === "" || roleValue === role;
+            const statusMatch = status === "" || statusValue === status;
+
+            row.style.display =
+              nameMatch && phoneMatch && roleMatch && statusMatch ? "" : "none";
+          });
+        });
+
+      // 清空功能
+      document
+        .getElementById("clear-btn")
+        .addEventListener("click", function () {
+          document.getElementById("name").value = "";
+          document.getElementById("phone").value = "";
+          document.getElementById("role").value = "";
+          document.getElementById("status").value = "";
+          const rows = document.querySelectorAll("#user-table tbody tr");
+          rows.forEach((row) => {
+            row.style.display = "";
+          });
+        });
+    </script>
+  </body>
+</html>

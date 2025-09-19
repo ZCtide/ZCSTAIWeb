@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>员工信息管理</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+        background-color: #f5f5f5;
+      }
+      h1 {
+        text-align: center;
+        color: #333;
+        margin-bottom: 30px;
+      }
+      .search-container {
+        background-color: white;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+      }
+      .search-item {
+        display: inline-block;
+        margin-right: 20px;
+        margin-bottom: 10px;
+      }
+      .search-item label {
+        display: inline-block;
+        width: 60px;
+        text-align: right;
+        margin-right: 10px;
+      }
+      .search-item input,
+      .search-item select {
+        padding: 5px 10px;
+        border: 1px solid #ddd;
+        border-radius: 3px;
+        width: 150px;
+      }
+      button {
+        padding: 6px 20px;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+        margin-right: 10px;
+      }
+      button:hover {
+        background-color: #45a049;
+      }
+      .clear-btn {
+        background-color: #999;
+      }
+      .clear-btn:hover {
+        background-color: #777;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        background-color: white;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      th,
+      td {
+        padding: 12px;
+        text-align: center;
+        border-bottom: 1px solid #ddd;
+      }
+      th {
+        background-color: #008cba;
+        color: white;
+      }
+      tr:hover {
+        background-color: #f5f5f5;
+      }
+      img {
+        width: 30px;
+        height: 30px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>员工信息管理</h1>
+    <div class="search-container">
+      <div class="search-item">
+        <label for="name">姓名:</label>
+        <input type="text" id="name" placeholder="请输入姓名" />
+      </div>
+      <div class="search-item">
+        <label for="gender">性别:</label>
+        <select id="gender">
+          <option value="">请选择</option>
+          <option value="男">男</option>
+          <option value="女">女</option>
+        </select>
+      </div>
+      <div class="search-item">
+        <label for="position">职位:</label>
+        <select id="position">
+          <option value="">请选择</option>
+          <option value="班主任">班主任</option>
+          <option value="讲师">讲师</option>
+          <option value="学工主管">学工主管</option>
+          <option value="教研主管">教研主管</option>
+          <option value="咨询师">咨询师</option>
+        </select>
+      </div>
+      <button id="search-btn">查询</button>
+      <button id="clear-btn" class="clear-btn">清空</button>
+    </div>
+    <table id="employee-table">
+      <thead>
+        <tr>
+          <th>序号</th>
+          <th>姓名</th>
+          <th>头像</th>
+          <th>性别</th>
+          <th>职位</th>
+          <th>入职日期</th>
+          <th>更新时间</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>令狐冲</td>
+          <td><img src="images/1.png" alt="头像" /></td>
+          <td>男</td>
+          <td>讲师</td>
+          <td>2025-05-10</td>
+          <td>2025-05-10 12:05:30</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>左冷禅</td>
+          <td><img src="images/1.png" alt="头像" /></td>
+          <td>男</td>
+          <td>讲师</td>
+          <td>2024-03-05</td>
+          <td>2025-05-10 12:05:30</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>岳不群</td>
+          <td><img src="images/1.png" alt="头像" /></td>
+          <td>男</td>
+          <td>讲师</td>
+          <td>2025-05-15</td>
+          <td>2025-05-10 12:05:30</td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td>任盈盈</td>
+          <td><img src="images/1.png" alt="头像" /></td>
+          <td>女</td>
+          <td>班主任</td>
+          <td>2022-08-10</td>
+          <td>2025-05-10 12:05:30</td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td>陆柏</td>
+          <td><img src="images/1.png" alt="头像" /></td>
+          <td>男</td>
+          <td>咨询师</td>
+          <td>2024-02-12</td>
+          <td>2025-05-10 12:05:30</td>
+        </tr>
+        <tr>
+          <td>6</td>
+          <td>田伯光</td>
+          <td><img src="images/1.png" alt="头像" /></td>
+          <td>男</td>
+          <td>讲师</td>
+          <td>2025-05-10</td>
+          <td>2025-05-10 12:05:30</td>
+        </tr>
+        <tr>
+          <td>7</td>
+          <td>任我行</td>
+          <td><img src="images/1.png" alt="头像" /></td>
+          <td>男</td>
+          <td>教研主管</td>
+          <td>2023-11-08</td>
+          <td>2025-05-10 12:05:30</td>
+        </tr>
+        <tr>
+          <td>8</td>
+          <td>向问天</td>
+          <td><img src="images/1.png" alt="头像" /></td>
+          <td>男</td>
+          <td>班主任</td>
+          <td>2024-06-20</td>
+          <td>2025-05-10 12:05:30</td>
+        </tr>
+        <tr>
+          <td>9</td>
+          <td>定逸</td>
+          <td><img src="images/1.png" alt="头像" /></td>
+          <td>女</td>
+          <td>学工主管</td>
+          <td>2023-07-15</td>
+          <td>2025-05-10 12:05:30</td>
+        </tr>
+        <tr>
+          <td>10</td>
+          <td>依琳</td>
+          <td><img src="images/1.png" alt="头像" /></td>
+          <td>女</td>
+          <td>班主任</td>
+          <td>2022-04-20</td>
+          <td>2025-05-10 12:05:30</td>
+        </tr>
+      </tbody>
+    </table>
+    <script>
+      // 简单的查询和清空功能
+      document
+        .getElementById("search-btn")
+        .addEventListener("click", function () {
+          const name = document.getElementById("name").value.toLowerCase();
+          const gender = document.getElementById("gender").value;
+          const position = document.getElementById("position").value;
+          const rows = document.querySelectorAll("#employee-table tbody tr");
+
+          rows.forEach((row) => {
+            const nameCell = row.cells[1].textContent.toLowerCase();
+            const genderCell = row.cells[3].textContent;
+            const positionCell = row.cells[4].textContent;
+
+            const nameMatch = name === "" || nameCell.includes(name);
+            const genderMatch = gender === "" || genderCell === gender;
+            const positionMatch = position === "" || positionCell === position;
+
+            row.style.display =
+              nameMatch && genderMatch && positionMatch ? "" : "none";
+          });
+        });
+
+      document
+        .getElementById("clear-btn")
+        .addEventListener("click", function () {
+          document.getElementById("name").value = "";
+          document.getElementById("gender").value = "";
+          document.getElementById("position").value = "";
+          const rows = document.querySelectorAll("#employee-table tbody tr");
+          rows.forEach((row) => {
+            row.style.display = "";
+          });
+        });
+    </script>
+  </body>
+</html>

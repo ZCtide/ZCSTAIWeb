@@ -1,0 +1,84 @@
+
+body {
+    font-family: 'Microsoft YaHei', Arial, sans-serif; /* 字体 */
+    margin: 0; /* 外边距 */
+    padding: 0;  /* 内边距 */
+    background: #f2f0f0; /* 背景颜色 */
+}
+.container {
+    width: 95%; /* 宽度 */
+    margin: 0 auto; /* 居中 */
+    margin-top: 30px; /* 上边距 */
+}
+.title {
+    text-align: center;
+    font-size: 48px;
+    font-weight: bold;
+    margin-top: 30px;
+    margin-bottom: 40px;
+    letter-spacing: 6px;
+}
+.search-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    margin-bottom: 30px;
+}
+.search-bar label {
+    font-size: 18px;
+    font-weight: 500;
+}
+.search-bar input[type="text"],
+.search-bar select {
+    padding: 8px 12px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    min-width: 180px;
+}
+.search-bar button {
+    padding: 8px 32px;
+    font-size: 18px;
+    border: none;
+    border-radius: 6px;
+    margin-left: 10px;
+    cursor: pointer;
+}
+.search-bar .search-btn {
+    background: #169bd5;
+    color: #fff;
+}
+.search-bar .clear-btn {
+    background: #888;
+    color: #fff;
+}
+table {
+    width: 80%;
+    margin: 0 auto 40px auto;
+    border-collapse: collapse;
+}
+th, td {
+    border: 1px solid #aaa;
+    padding: 14px 0;
+    text-align: center;
+    font-size: 18px;
+}
+th {
+    background: #7ed0f7;
+    font-weight: 600;
+}
+tr:nth-child(even) td {
+    background: #f8f8f8;
+}
+.avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+@media (max-width: 900px) {
+    .container { width: 100%; }
+    .search-bar { flex-direction: column; gap: 16px; }
+    th, td { font-size: 15px; padding: 8px 0; }
+}

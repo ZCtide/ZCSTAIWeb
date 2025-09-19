@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <title>用户信息管理系统</title>
+    <style>
+      body {
+        font-family: "Microsoft YaHei", Arial, sans-serif;
+        background: #fff;
+        margin: 0;
+        padding: 0;
+      }
+      .container {
+        width: 90%;
+        max-width: 1400px;
+        margin: 40px auto 0 auto;
+      }
+      .title {
+        font-family: "楷体";
+        text-align: center;
+        font-size: 48px;
+        font-weight: bold;
+        margin-top: 40px;
+        margin-bottom: 40px;
+        letter-spacing: 6px;
+      }
+      .search-bar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+        flex-wrap: wrap;
+      }
+      .search-bar label {
+        font-size: 18px;
+        margin-right: 8px;
+        min-width: 60px;
+      }
+      .search-bar input[type="text"],
+      .search-bar select {
+        font-size: 16px;
+        padding: 6px 12px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        min-width: 180px;
+        margin-right: 30px;
+      }
+      .search-actions {
+        display: flex;
+        gap: 20px;
+      }
+      .search-actions button {
+        font-size: 18px;
+        padding: 8px 32px;
+        border: none;
+        border-radius: 6px;
+        background: #04a0f4;
+        color: #fff;
+        cursor: pointer;
+        transition: background 0.2s;
+      }
+      .search-actions .clear {
+        background: #888;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 40px;
+        background: #fff;
+      }
+      th,
+      td {
+        border: 1px solid #b3d7ea;
+        padding: 12px 8px;
+        text-align: center;
+        font-size: 16px;
+      }
+      th {
+        background: #8fd0f6;
+        color: #222;
+        font-size: 18px;
+      }
+      tr:nth-child(even) {
+        background: #f7fbfd;
+      }
+      .avatar {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        object-fit: cover;
+        background: #eee;
+      }
+      .loading {
+        text-align: center;
+        padding: 40px;
+        color: #666;
+      }
+      .error {
+        text-align: center;
+        padding: 40px;
+        color: #ff4d4f;
+      }
+      .empty-message {
+        text-align: center;
+        padding: 40px;
+        color: #999;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container" id="app">
+      <div class="title">用户信息管理系统</div>
+      <form class="search-bar">
+        <label for="name">姓名:</label>
+        <input
+          type="text"
+          id="name"
+          v-model="searchParams.name"
+          placeholder="请输入姓名"
+        />
+
+        <label for="phone">手机号:</label>
+        <input
+          type="text"
+          id="phone"
+          v-model="searchParams.phone"
+          placeholder="请输入手机号"
+        />
+
+        <label for="role">角色:</label>
+        <select id="role" v-model="searchParams.role">
+          <option value="">请选择</option>
+          <option value="1">管理员</option>
+          <option value="2">普通员工</option>
+          <option value="3">实习员工</option>
+        </select>
+
+        <label for="status">状态:</label>
+        <select id="status" v-model="searchParams.status">
+          <option value="">请选择</option>
+          <option value="1">正常</option>
+          <option value="0">停用</option>
+        </select>
+
+        <div class="search-actions">
+          <button type="button" @click="search">查询</button>
+          <button type="button" class="clear" @click="clearSearch">清空</button>
+        </div>
+      </form>
+
+      <table>
+        <thead>
+          <tr>
+            <th>序号</th>
+            <th>姓名</th>
+            <th>用户名</th>
+            <th>头像</th>
+            <th>角色</th>
+            <th>手机号</th>
+            <th>状态</th>
+            <th>更新时间</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- 加载中状态 -->
+          <tr v-if="loading">
+            <td colspan="8" class="loading">正在加载数据...</td>
+          </tr>
+
+          <!-- 错误状态 -->
+          <tr v-else-if="error">
+            <td colspan="8" class="error">获取数据失败：{{ error }}</td>
+          </tr>
+
+          <!-- 数据列表 -->
+          <tr
+            v-else-if="users.length > 0"
+            v-for="(user, index) in users"
+            :key="user.id"
+          >
+            <td>{{ index + 1 }}</td>
+            <td>{{ user.name }}</td>
+            <td>{{ user.username }}</td>
+            <td><img class="avatar" :src="user.image" alt="头像" /></td>
+            <td>{{ roleMap[user.role] }}</td>
+            <td>{{ user.phone }}</td>
+            <td>{{ statusMap[user.status] }}</td>
+            <td>{{ formatDate(user.updateTime) }}</td>
+          </tr>
+
+          <!-- 空数据状态 -->
+          <tr v-else>
+            <td colspan="8" class="empty-message">暂无数据</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- js -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script type="module">
+      import { createApp } from "https://unpkg.com/vue@3/dist/vue.esm-browser.js";
+      createApp({
+        data() {
+          return {
+            users: [],
+            loading: false,
+            error: "",
+            searchParams: {
+              name: "",
+              phone: "",
+              role: "",
+              status: "",
+            },
+            roleMap: {
+              1: "管理员",
+              2: "普通员工",
+              3: "实习员工",
+            },
+            statusMap: {
+              1: "正常",
+              0: "停用",
+            },
+          };
+        },
+        methods: {
+          async fetchUsers() {
+            this.loading = true;
+            this.error = "";
+            try {
+              const response = await axios.get(
+                "http://47.98.197.202:9087/users/list",
+                {
+                  params: this.searchParams,
+                }
+              );
+              if (response.data.code === 1) {
+                this.users = response.data.data || [];
+              } else {
+                this.error = response.data.msg || "获取数据失败";
+                this.users = [];
+              }
+            } catch (err) {
+              this.error = `网络错误：${err.message}`;
+              this.users = [];
+            } finally {
+              this.loading = false;
+            }
+          },
+
+          search() {
+            this.fetchUsers();
+          },
+
+          clearSearch() {
+            this.searchParams = {
+              name: "",
+              phone: "",
+              role: "",
+              status: "",
+            };
+            this.fetchUsers();
+          },
+
+          formatDate(dateString) {
+            if (!dateString) return "";
+            try {
+              const date = new Date(dateString);
+              const year = date.getFullYear();
+              const month = String(date.getMonth() + 1).padStart(2, "0");
+              const day = String(date.getDate()).padStart(2, "0");
+              const hours = String(date.getHours()).padStart(2, "0");
+              const minutes = String(date.getMinutes()).padStart(2, "0");
+              const seconds = String(date.getSeconds()).padStart(2, "0");
+              return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+            } catch (e) {
+              return dateString;
+            }
+          },
+        },
+        mounted() {
+          this.fetchUsers();
+        },
+      }).mount("#app");
+    </script>
+  </body>
+</html>

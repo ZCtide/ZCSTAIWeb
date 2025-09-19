@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JS对象的使用</title>
+  </head>
+  <body>
+    <script>
+      // 1. 定义对象
+      let obj = {
+        name: "张三",
+        age: 18,
+        sex: "男",
+        sing: () => {
+          console.log(obj.name + "会唱歌");
+        },
+      };
+      // 2. 访问对象的属性
+      console.log(obj.name);
+      console.log(obj.age);
+      console.log(obj.sex);
+
+      obj.sing();
+    </script>
+  </body>
+</html>

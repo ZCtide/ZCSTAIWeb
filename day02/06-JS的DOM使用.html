@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>06-JS的DOM使用.html</title>
+  </head>
+  <body>
+    <div class="box">一个盒子</div>
+    <script>
+      // 1. 获取元素
+      let box = document.querySelector(".box");
+      console.log(box);
+      // 2. 操作元素
+      box.style.backgroundColor = "red";
+      // 3. 事件绑定
+      box.addEventListener("click", function () {
+        console.log("点击了盒子");
+      });
+    </script>
+  </body>
+</html>

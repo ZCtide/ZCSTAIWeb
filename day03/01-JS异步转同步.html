@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>01-JS异步转同步</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  </head>
+  <body>
+    <input type="button" value="JS异步转同步" id="btn" />
+    <script>
+      document.getElementById("btn").addEventListener("click", async () => {
+        try {
+          const res = await axios.get(
+            "https://mock.apifox.cn/m1/3083103-0-default/emps/list"
+          );
+          console.log(res.data);
+        } catch (error) {
+          console.log(error);
+        }
+      });
+    </script>
+  </body>
+</html>

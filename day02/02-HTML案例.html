@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>员工信息管理</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+        background-color: #f5f5f5;
+      }
+      h1 {
+        text-align: center;
+        color: #333;
+        margin-bottom: 30px;
+      }
+      .search-container {
+        background-color: white;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+      }
+      .search-item {
+        display: inline-block;
+        margin-right: 20px;
+        margin-bottom: 10px;
+      }
+      .search-item label {
+        display: inline-block;
+        width: 60px;
+        text-align: right;
+        margin-right: 10px;
+      }
+      .search-item input,
+      .search-item select {
+        padding: 5px 10px;
+        border: 1px solid #ddd;
+        border-radius: 3px;
+        width: 150px;
+      }
+      button {
+        padding: 6px 20px;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+        margin-right: 10px;
+      }
+      button:hover {
+        background-color: #45a049;
+      }
+      .clear-btn {
+        background-color: #999;
+      }
+      .clear-btn:hover {
+        background-color: #777;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        background-color: white;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      th,
+      td {
+        padding: 12px;
+        text-align: center;
+        border-bottom: 1px solid #ddd;
+      }
+      th {
+        background-color: #008cba;
+        color: white;
+      }
+      tr:hover {
+        background-color: #f5f5f5;
+      }
+      img {
+        width: 30px;
+        height: 30px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>员工信息管理</h1>
+    <div class="search-container">
+      <div class="search-item">
+        <label for="name">姓名:</label>
+        <input type="text" id="name" placeholder="请输入姓名" />
+      </div>
+      <div class="search-item">
+        <label for="gender">性别:</label>
+        <select id="gender">
+          <option value="">请选择</option>
+          <option value="男">男</option>
+          <option value="女">女</option>
+        </select>
+      </div>
+      <div class="search-item">
+        <label for="position">职位:</label>
+        <select id="position">
+          <option value="">请选择</option>
+          <option value="班主任">班主任</option>
+          <option value="讲师">讲师</option>
+          <option value="学工主管">学工主管</option>
+          <option value="教研主管">教研主管</option>
+          <option value="咨询师">咨询师</option>
+        </select>
+      </div>
+      <button id="search-btn">查询</button>
+      <button id="clear-btn" class="clear-btn">清空</button>
+    </div>
+    <table id="employee-table">
+      <thead>
+        <tr>
+          <th>序号</th>
+          <th>姓名</th>
+          <th>头像</th>
+          <th>性别</th>
+          <th>职位</th>
+          <th>入职日期</th>
+          <th>更新时间</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- 数据将通过JavaScript动态加载 -->
+        <tr>
+          <td colspan="7">正在加载数据...</td>
+        </tr>
+      </tbody>
+    </table>
+    <script>
+      // 职位映射
+      const jobMapping = {
+        1: '班主任',
+        2: '讲师',
+        3: '学工主管',
+        4: '教研主管',
+        5: '咨询师'
+      };
+      
+      // 性别映射
+      const genderMapping = {
+        1: '男',
+        2: '女'
+      };
+      
+      // 获取员工数据
+      function fetchEmployeeData() {
+        const name = document.getElementById("name").value.toLowerCase();
+        const gender = document.getElementById("gender").value;
+        const position = document.getElementById("position").value;
+        
+        axios.get('https://mock.apifox.cn/m1/3083103-0-default/emps/list')
+          .then(response => {
+            const data = response.data.data;
+            renderEmployeeList(data, name, gender, position);
+          })
+          .catch(error => {
+            console.error('获取员工数据失败:', error);
+            const tbody = document.querySelector("#employee-table tbody");
+            tbody.innerHTML = '<tr><td colspan="7">获取员工数据失败，请稍后重试</td></tr>';
+          });
+      }
+      
+      // 渲染员工列表
+      function renderEmployeeList(employees, nameFilter, genderFilter, positionFilter) {
+        const tbody = document.querySelector("#employee-table tbody");
+        tbody.innerHTML = ''; // 清空现有内容
+        
+        let filteredEmployees = employees;
+        
+        // 应用过滤条件
+        if (nameFilter) {
+          filteredEmployees = filteredEmployees.filter(emp => 
+            emp.name.toLowerCase().includes(nameFilter)
+          );
+        }
+        
+        if (genderFilter) {
+          const genderValue = genderFilter === '男' ? 1 : 2;
+          filteredEmployees = filteredEmployees.filter(emp => emp.gender === genderValue);
+        }
+        
+        if (positionFilter) {
+          const positionValue = Object.keys(jobMapping).find(key => jobMapping[key] === positionFilter);
+          if (positionValue) {
+            filteredEmployees = filteredEmployees.filter(emp => emp.job == positionValue);
+          }
+        }
+        
+        // 渲染过滤后的员工数据
+        filteredEmployees.forEach((emp, index) => {
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td>${index + 1}</td>
+            <td>${emp.name}</td>
+            <td><img src="${emp.image}" alt="${emp.name}的头像" /></td>
+            <td>${genderMapping[emp.gender] || '未知'}</td>
+            <td>${jobMapping[emp.job] || '未知'}</td>
+            <td>${emp.entrydate}</td>
+            <td>${emp.updatetime}</td>
+          `;
+          tbody.appendChild(row);
+        });
+        
+        // 如果没有数据，显示提示信息
+        if (filteredEmployees.length === 0) {
+          const emptyRow = document.createElement('tr');
+          emptyRow.innerHTML = `<td colspan="7">暂无匹配的员工数据</td>`;
+          tbody.appendChild(emptyRow);
+        }
+      }
+      
+      // 查询按钮点击事件
+      document
+        .getElementById("search-btn")
+        .addEventListener("click", function () {
+          fetchEmployeeData();
+        });
+
+      // 清空按钮点击事件
+      document
+        .getElementById("clear-btn")
+        .addEventListener("click", function () {
+          document.getElementById("name").value = "";
+          document.getElementById("gender").value = "";
+          document.getElementById("position").value = "";
+          fetchEmployeeData(); // 清空后重新加载全部数据
+        });
+        
+      // 页面加载完成后自动获取一次数据
+      window.addEventListener('load', fetchEmployeeData);
+    </script>
+  </body>
+</html>
